@@ -11,6 +11,9 @@
 :root {
   --gold: #F5B800;
   --gold-glow: rgba(245,184,0,0.15);
+  --neon: #00FF88;
+  --neon-glow: rgba(0,255,136,0.15);
+  --neon-dim: rgba(0,255,136,0.06);
   --black: #0A0A0A;
   --card: #111111;
   --white: #FFFFFF;
@@ -334,6 +337,89 @@ body::after {
 }
 .trust-item .check { color: var(--green); font-weight: 700; font-size: 13px; }
 
+/* ========== COMPARISON TABLE ========== */
+.compare-section {
+  width: 100%;
+  margin-bottom: 20px;
+  animation: fadeUp 0.4s ease-out 0.52s both;
+}
+.compare-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  color: var(--white);
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 12px;
+}
+.compare-table thead th {
+  padding: 10px 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  color: var(--gray);
+  vertical-align: bottom;
+  line-height: 1.3;
+}
+.compare-table thead th:first-child {
+  text-align: left;
+  padding-left: 12px;
+}
+.compare-table thead th .th-icon {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+.compare-table thead th .th-price {
+  display: block;
+  font-size: 9px;
+  color: rgba(255,255,255,0.3);
+  font-weight: 500;
+  margin-top: 2px;
+}
+.compare-table thead th.col-free { color: var(--green); }
+.compare-table thead th.col-props { color: #9B59B6; }
+.compare-table thead th.col-premium { color: #3498DB; }
+.compare-table thead th.col-highrollers { color: var(--gold); }
+.compare-table tbody td {
+  padding: 9px 6px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: var(--gray);
+  font-size: 12px;
+}
+.compare-table tbody td:first-child {
+  text-align: left;
+  padding-left: 12px;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 11px;
+}
+.compare-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.compare-table .check-yes {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 14px;
+}
+.compare-table .check-no {
+  color: rgba(255,255,255,0.15);
+  font-size: 12px;
+}
+
 /* ========== CHECKOUT MODAL ========== */
 .modal-overlay {
   display: none;
@@ -550,6 +636,79 @@ body::after {
       High Rollers
       <span class="btn-arrow">→</span>
     </button>
+  </div>
+  <!-- Comparison Table -->
+  <div class="compare-section">
+    <div class="compare-title">Compare Plans</div>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="col-free"><span class="th-icon">🏆</span>Free<span class="th-price">$0</span></th>
+          <th class="col-props"><span class="th-icon">🎯</span>Props<span class="th-price">From $19.99/wk</span></th>
+          <th class="col-premium"><span class="th-icon">💎</span>Premium<span class="th-price">From $49.99/wk</span></th>
+          <th class="col-highrollers"><span class="th-icon">🔥</span>High Rollers<span class="th-price">$249.99/mo</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Community Access</td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Free Picks</td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Player Prop Picks</td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Premium Picks</td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Parlay of the Day</td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>Live Bet Alerts</td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>VIP Chat Access</td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>1-on-1 Support</td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-no">—</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
   <!-- Live win feed -->
   <div class="win-feed">
