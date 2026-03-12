@@ -126,6 +126,20 @@ body::after {
   animation: fadeUp 0.4s ease-out 0.35s both;
 }
 .subline strong { color: var(--white); }
+/* VSL VIDEO */
+.vsl-wrapper {
+  width: 100%;
+  margin-bottom: 24px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid rgba(245,184,0,0.2);
+  animation: fadeUp 0.4s ease-out 0.4s both;
+}
+.vsl-video {
+  width: 100%;
+  display: block;
+  background: var(--black);
+}
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
@@ -490,6 +504,12 @@ body::after {
     30K+ Members Winning
   </div>
   <p class="subline">Join the <strong>#1 betting community</strong> on Whop. Free access — no card required.</p>
+  <!-- VSL Video -->
+  <div class="vsl-wrapper">
+    <video class="vsl-video" controls playsinline preload="metadata" poster="">
+      <source src="https://github.com/runwiththewinners/rwtw/releases/download/logo/RWTW.VSL.mp4" type="video/mp4">
+    </video>
+  </div>
   <!-- Social proof numbers -->
   <div class="proof-strip">
     <div class="proof-item">
