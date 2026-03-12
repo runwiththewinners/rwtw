@@ -393,6 +393,26 @@ body::after {
 .compare-table thead th.col-props { color: #9B59B6; }
 .compare-table thead th.col-premium { color: #3498DB; }
 .compare-table thead th.col-highrollers { color: var(--gold); }
+.th-sticker {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 800;
+  font-family: 'Barlow', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 2px 6px;
+  border-radius: 100px;
+  margin-top: 3px;
+  line-height: 1.3;
+}
+.th-sticker.popular {
+  background: #3498DB;
+  color: var(--white);
+}
+.th-sticker.value {
+  background: var(--gold);
+  color: var(--black);
+}
 .compare-table tbody td {
   padding: 9px 6px;
   text-align: center;
@@ -418,6 +438,57 @@ body::after {
 .compare-table .check-no {
   color: rgba(255,255,255,0.15);
   font-size: 12px;
+}
+
+/* ========== COUNTDOWN TIMER ========== */
+.countdown-bar {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid rgba(245,184,0,0.15);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeUp 0.4s ease-out 0.54s both;
+  position: relative;
+  overflow: hidden;
+}
+.countdown-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(245,184,0,0.04), transparent);
+  animation: shimmer 3s infinite;
+}
+.countdown-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  margin-bottom: 6px;
+  position: relative;
+}
+.countdown-time {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: var(--white);
+  position: relative;
+}
+.countdown-time .colon {
+  opacity: 0.4;
+  margin: 0 2px;
+}
+.countdown-dropped {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--green);
+  position: relative;
 }
 
 /* ========== CHECKOUT MODAL ========== */
@@ -646,14 +717,21 @@ body::after {
           <th></th>
           <th class="col-free"><span class="th-icon">🏆</span>Free<span class="th-price">$0</span></th>
           <th class="col-props"><span class="th-icon">🎯</span>Props<span class="th-price">From $19.99/wk</span></th>
-          <th class="col-premium"><span class="th-icon">💎</span>Premium<span class="th-price">From $49.99/wk</span></th>
-          <th class="col-highrollers"><span class="th-icon">🔥</span>High Rollers<span class="th-price">$249.99/mo</span></th>
+          <th class="col-premium"><span class="th-icon">💎</span>Premium<span class="th-price">From $49.99/wk</span><span class="th-sticker popular">Popular</span></th>
+          <th class="col-highrollers"><span class="th-icon">🔥</span>High Rollers<span class="th-price">$249.99/mo</span><span class="th-sticker value">Value</span></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Community Access</td>
           <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>VIP Chat Access</td>
+          <td><span class="check-no">—</span></td>
           <td><span class="check-yes">✓</span></td>
           <td><span class="check-yes">✓</span></td>
           <td><span class="check-yes">✓</span></td>
@@ -680,16 +758,16 @@ body::after {
           <td><span class="check-yes">✓</span></td>
         </tr>
         <tr>
-          <td>Live Bet Alerts</td>
+          <td>Play of the Day</td>
           <td><span class="check-no">—</span></td>
           <td><span class="check-no">—</span></td>
           <td><span class="check-yes">✓</span></td>
           <td><span class="check-yes">✓</span></td>
         </tr>
         <tr>
-          <td>VIP Chat Access</td>
+          <td>Live Bet Alerts</td>
           <td><span class="check-no">—</span></td>
-          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-no">—</span></td>
           <td><span class="check-yes">✓</span></td>
           <td><span class="check-yes">✓</span></td>
         </tr>
@@ -702,6 +780,11 @@ body::after {
         </tr>
       </tbody>
     </table>
+  </div>
+  <!-- Countdown Timer -->
+  <div class="countdown-bar" id="countdownBar">
+    <div class="countdown-label" id="countdownLabel">Play of the Day Dropping In</div>
+    <div class="countdown-time" id="countdownTime"></div>
   </div>
   <!-- Live win feed -->
   <div class="win-feed">
@@ -866,6 +949,58 @@ modal.addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
 });
+
+// Countdown to 5:00 PM ET daily
+(function() {
+  var label = document.getElementById('countdownLabel');
+  var timeEl = document.getElementById('countdownTime');
+
+  function getNext5PM() {
+    // Get current time in ET
+    var now = new Date();
+    var et = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    var target = new Date(et);
+    target.setHours(17, 0, 0, 0);
+    // If past 5 PM ET, target is tomorrow
+    if (et >= target) {
+      target.setDate(target.getDate() + 1);
+    }
+    // Convert back: get the difference using ET times
+    var diffMs = target - et;
+    return diffMs;
+  }
+
+  function updateCountdown() {
+    var diff = getNext5PM();
+    // If within 30 minutes after 5 PM (diff > 23.5 hours means we just passed it)
+    var totalHours = diff / (1000 * 60 * 60);
+    if (totalHours > 23.5) {
+      // Just passed 5 PM — show "dropped" state for 30 min
+      label.textContent = "Play of the Day";
+      label.style.color = '';
+      timeEl.className = 'countdown-dropped';
+      timeEl.innerHTML = "🔥 LIVE NOW — GET IN 🔥";
+      return;
+    }
+
+    label.textContent = "Play of the Day Dropping In";
+    label.style.color = '';
+    timeEl.className = 'countdown-time';
+
+    var hours = Math.floor(diff / (1000 * 60 * 60));
+    var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    var h = hours < 10 ? '0' + hours : hours;
+    var m = mins < 10 ? '0' + mins : mins;
+    var s = secs < 10 ? '0' + secs : secs;
+
+    timeEl.innerHTML = h + '<span class="colon">:</span>' + m + '<span class="colon">:</span>' + s;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
 </script>
 </body>
 </html>
