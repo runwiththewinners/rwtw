@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Premium — Monthly | Run With The Winners</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
+<style>
+:root {
+  --gold: #F5B800;
+  --black: #0A0A0A;
+  --card: #111111;
+  --white: #FFFFFF;
+  --gray: #7A7A7A;
+  --green: #00E676;
+  --accent: #3498DB;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 20px;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+body::before {
+  content: '';
+  position: fixed;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(245,184,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.page {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.back-link {
+  align-self: flex-start;
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--white); }
+.checkout-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.checkout-icon { font-size: 40px; margin-bottom: 8px; }
+.checkout-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 32px;
+  letter-spacing: 1px;
+}
+.checkout-freq {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+.checkout-embed-wrapper {
+  width: 100%;
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 500px;
+}
+.checkout-embed-wrapper > div {
+  min-height: 500px;
+}
+.trust-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+.trust-item {
+  font-size: 11px;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.trust-item .check { color: var(--green); font-weight: 700; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <a href="../index.html" class="back-link">← Back</a>
+  <div class="checkout-header">
+    <div class="checkout-icon">💎</div>
+    <div class="checkout-title">Premium</div>
+    <span class="checkout-freq">Monthly — $139.99/mo</span>
+  </div>
+  <div class="checkout-embed-wrapper">
+    <div
+      data-whop-checkout-plan-id="plan_yVSMf6AiOityO"
+      data-whop-checkout-return-url="../index.html"
+    ></div>
+  </div>
+  <div class="trust-row">
+    <span class="trust-item"><span class="check">✓</span> Secure checkout</span>
+    <span class="trust-item"><span class="check">✓</span> Cancel anytime</span>
+    <span class="trust-item"><span class="check">✓</span> Instant access</span>
+  </div>
+</div>
+</body>
+</html>

@@ -455,38 +455,29 @@ body::after {
   letter-spacing: 0.5px;
 }
 
-/* Checkout iframe container */
-.checkout-container {
-  padding: 0;
-  min-height: 500px;
-}
-.checkout-container iframe {
-  width: 100%;
-  min-height: 700px;
+/* Frequency confirm button */
+.freq-confirm {
+  display: block;
+  width: calc(100% - 48px);
+  margin: 0 24px 24px;
+  padding: 16px;
   border: none;
-  border-radius: 0 0 20px 20px;
+  border-radius: 12px;
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: all 0.25s;
 }
-.checkout-loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 500px;
-  color: var(--gray);
-  font-size: 14px;
-  flex-direction: column;
-  gap: 12px;
+.freq-confirm:hover {
+  box-shadow: 0 4px 20px rgba(245,184,0,0.4);
+  transform: translateY(-1px);
 }
-.checkout-spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid rgba(255,255,255,0.08);
-  border-top-color: var(--gold);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+.freq-confirm:active { transform: scale(0.98); }
 </style>
 </head>
 <body>
@@ -581,54 +572,51 @@ body::after {
         <span class="freq-save">Save</span>
       </button>
     </div>
-    <div class="checkout-container" id="checkoutContainer"></div>
+    <button class="freq-confirm" id="freqConfirm" type="button">Continue to Checkout →</button>
   </div>
 </div>
 
 <script>
-// Product configuration — update plan IDs here
-// Each product needs a weekly and monthly plan ID from your Whop dashboard
-const PRODUCTS = {
+// Product configuration — checkout page URLs for each frequency
+var PRODUCTS = {
   props: {
     name: 'Player Props',
     icon: '🎯',
     weeklyPrice: '$19.99/wk',
     monthlyPrice: '$69.99/mo',
-    weeklyPlanId: 'plan_zYIJo70dXb81W',
-    monthlyPlanId: 'plan_la8tljuRIc3n3',
+    weeklyUrl: 'checkout/props-weekly.html',
+    monthlyUrl: 'checkout/props-monthly.html',
   },
   premium: {
     name: 'Premium',
     icon: '💎',
     weeklyPrice: '$39.99/wk',
     monthlyPrice: '$139.99/mo',
-    weeklyPlanId: 'plan_FezVq0lWTMaGk',
-    monthlyPlanId: 'plan_yVSMf6AiOityO',
+    weeklyUrl: 'checkout/premium-weekly.html',
+    monthlyUrl: 'checkout/premium-monthly.html',
   },
   highrollers: {
     name: 'High Rollers',
     icon: '🔥',
     weeklyPrice: null,
     monthlyPrice: '$249.99/mo',
-    weeklyPlanId: null,
-    monthlyPlanId: 'plan_s4aOLf5Ao4agv',
+    weeklyUrl: null,
+    monthlyUrl: 'checkout/highrollers-monthly.html',
     monthlyOnly: true,
   },
 };
 
-const RETURN_URL = window.location.href;
+var modal = document.getElementById('checkoutModal');
+var modalClose = document.getElementById('modalClose');
+var modalIcon = document.getElementById('modalIcon');
+var modalName = document.getElementById('modalName');
+var weeklyPriceEl = document.getElementById('weeklyPrice');
+var monthlyPriceEl = document.getElementById('monthlyPrice');
+var freqConfirm = document.getElementById('freqConfirm');
+var freqBtns = document.querySelectorAll('.freq-btn');
 
-const modal = document.getElementById('checkoutModal');
-const modalClose = document.getElementById('modalClose');
-const modalIcon = document.getElementById('modalIcon');
-const modalName = document.getElementById('modalName');
-const weeklyPriceEl = document.getElementById('weeklyPrice');
-const monthlyPriceEl = document.getElementById('monthlyPrice');
-const checkoutContainer = document.getElementById('checkoutContainer');
-const freqBtns = document.querySelectorAll('.freq-btn');
-
-let currentProduct = null;
-let currentFreq = 'weekly';
+var currentProduct = null;
+var currentFreq = 'weekly';
 
 function openModal(productKey) {
   var product = PRODUCTS[productKey];
@@ -637,68 +625,42 @@ function openModal(productKey) {
   currentProduct = productKey;
   var freqToggle = document.querySelector('.freq-toggle');
 
-  // Handle monthly-only products (e.g., High Rollers)
+  // Handle monthly-only products — skip modal, go straight to checkout
   if (product.monthlyOnly) {
-    currentFreq = 'monthly';
-    freqToggle.style.display = 'none';
-  } else {
-    currentFreq = 'weekly';
-    freqToggle.style.display = '';
-    weeklyPriceEl.textContent = product.weeklyPrice;
-    // Reset frequency toggle
-    freqBtns.forEach(function(btn) {
-      btn.classList.toggle('active', btn.dataset.freq === 'weekly');
-    });
+    window.location.href = product.monthlyUrl;
+    return;
   }
+
+  currentFreq = 'weekly';
+  freqToggle.style.display = '';
+  weeklyPriceEl.textContent = product.weeklyPrice;
+  monthlyPriceEl.textContent = product.monthlyPrice;
+
+  // Reset frequency toggle
+  freqBtns.forEach(function(btn) {
+    btn.classList.toggle('active', btn.dataset.freq === 'weekly');
+  });
 
   // Populate modal header
   modalIcon.textContent = product.icon;
   modalName.textContent = product.name;
-  monthlyPriceEl.textContent = product.monthlyPrice;
 
   // Show modal
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
-
-  // Load checkout
-  loadCheckout();
 }
 
 function closeModal() {
   modal.classList.remove('active');
   document.body.style.overflow = '';
-  checkoutContainer.innerHTML = '';
   currentProduct = null;
 }
 
-function getPlanId() {
+function goToCheckout() {
   var product = PRODUCTS[currentProduct];
-  if (!product) return '';
-  return currentFreq === 'weekly' ? product.weeklyPlanId : product.monthlyPlanId;
-}
-
-function loadCheckout() {
-  var planId = getPlanId();
-  if (!planId) return;
-
-  // Clear previous checkout
-  checkoutContainer.innerHTML = '';
-
-  // Show loading spinner
-  var loading = document.createElement('div');
-  loading.className = 'checkout-loading';
-  loading.innerHTML = '<div class="checkout-spinner"></div>Loading checkout...';
-  checkoutContainer.appendChild(loading);
-
-  // Create iframe pointing to Whop checkout page
-  var iframe = document.createElement('iframe');
-  iframe.src = 'https://whop.com/checkout/' + planId + '/';
-  iframe.allow = 'payment';
-  iframe.onload = function() {
-    // Remove loading spinner when iframe loads
-    if (loading.parentNode) loading.parentNode.removeChild(loading);
-  };
-  checkoutContainer.appendChild(iframe);
+  if (!product) return;
+  var url = currentFreq === 'weekly' ? product.weeklyUrl : product.monthlyUrl;
+  if (url) window.location.href = url;
 }
 
 // Frequency toggle
@@ -706,15 +668,15 @@ freqBtns.forEach(function(btn) {
   btn.addEventListener('click', function() {
     var freq = this.dataset.freq;
     if (freq === currentFreq) return;
-
     currentFreq = freq;
     freqBtns.forEach(function(b) {
       b.classList.toggle('active', b.dataset.freq === freq);
     });
-
-    loadCheckout();
   });
 });
+
+// Confirm button
+freqConfirm.addEventListener('click', goToCheckout);
 
 // Product button clicks
 document.querySelectorAll('[data-product]').forEach(function(btn) {
