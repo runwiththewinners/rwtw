@@ -440,6 +440,57 @@ body::after {
   font-size: 12px;
 }
 
+/* ========== COUNTDOWN TIMER ========== */
+.countdown-bar {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid rgba(245,184,0,0.15);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeUp 0.4s ease-out 0.54s both;
+  position: relative;
+  overflow: hidden;
+}
+.countdown-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(245,184,0,0.04), transparent);
+  animation: shimmer 3s infinite;
+}
+.countdown-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--gold);
+  margin-bottom: 6px;
+  position: relative;
+}
+.countdown-time {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 2px;
+  color: var(--white);
+  position: relative;
+}
+.countdown-time .colon {
+  opacity: 0.4;
+  margin: 0 2px;
+}
+.countdown-dropped {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--green);
+  position: relative;
+}
+
 /* ========== CHECKOUT MODAL ========== */
 .modal-overlay {
   display: none;
@@ -730,6 +781,11 @@ body::after {
       </tbody>
     </table>
   </div>
+  <!-- Countdown Timer -->
+  <div class="countdown-bar" id="countdownBar">
+    <div class="countdown-label" id="countdownLabel">Play of the Day Dropping In</div>
+    <div class="countdown-time" id="countdownTime"></div>
+  </div>
   <!-- Live win feed -->
   <div class="win-feed">
     <div class="win-feed-inner">
@@ -893,6 +949,58 @@ modal.addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
 });
+
+// Countdown to 5:00 PM ET daily
+(function() {
+  var label = document.getElementById('countdownLabel');
+  var timeEl = document.getElementById('countdownTime');
+
+  function getNext5PM() {
+    // Get current time in ET
+    var now = new Date();
+    var et = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    var target = new Date(et);
+    target.setHours(17, 0, 0, 0);
+    // If past 5 PM ET, target is tomorrow
+    if (et >= target) {
+      target.setDate(target.getDate() + 1);
+    }
+    // Convert back: get the difference using ET times
+    var diffMs = target - et;
+    return diffMs;
+  }
+
+  function updateCountdown() {
+    var diff = getNext5PM();
+    // If within 30 minutes after 5 PM (diff > 23.5 hours means we just passed it)
+    var totalHours = diff / (1000 * 60 * 60);
+    if (totalHours > 23.5) {
+      // Just passed 5 PM — show "dropped" state for 30 min
+      label.textContent = "Play of the Day";
+      label.style.color = '';
+      timeEl.className = 'countdown-dropped';
+      timeEl.innerHTML = "🔥 LIVE NOW — GET IN 🔥";
+      return;
+    }
+
+    label.textContent = "Play of the Day Dropping In";
+    label.style.color = '';
+    timeEl.className = 'countdown-time';
+
+    var hours = Math.floor(diff / (1000 * 60 * 60));
+    var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    var h = hours < 10 ? '0' + hours : hours;
+    var m = mins < 10 ? '0' + mins : mins;
+    var s = secs < 10 ? '0' + secs : secs;
+
+    timeEl.innerHTML = h + '<span class="colon">:</span>' + m + '<span class="colon">:</span>' + s;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+})();
 </script>
 </body>
 </html>
