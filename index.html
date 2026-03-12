@@ -7,7 +7,6 @@
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
-<script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
 <style>
 :root {
   --gold: #F5B800;
@@ -456,19 +455,22 @@ body::after {
   letter-spacing: 0.5px;
 }
 
-/* Checkout embed container */
+/* Checkout iframe container */
 .checkout-container {
-  padding: 0 24px 24px;
-  min-height: 400px;
+  padding: 0;
+  min-height: 500px;
 }
-.checkout-container > div {
-  min-height: 380px;
+.checkout-container iframe {
+  width: 100%;
+  min-height: 700px;
+  border: none;
+  border-radius: 0 0 20px 20px;
 }
 .checkout-loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 380px;
+  min-height: 500px;
   color: var(--gray);
   font-size: 14px;
   flex-direction: column;
@@ -484,12 +486,6 @@ body::after {
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
-}
-
-/* Whop checkout iframe styling */
-.whop-checkout-wrapper iframe {
-  border-radius: 12px;
-  min-height: 380px;
 }
 </style>
 </head>
@@ -585,12 +581,7 @@ body::after {
         <span class="freq-save">Save</span>
       </button>
     </div>
-    <div class="checkout-container" id="checkoutContainer">
-      <div class="checkout-loading">
-        <div class="checkout-spinner"></div>
-        Loading checkout...
-      </div>
-    </div>
+    <div class="checkout-container" id="checkoutContainer"></div>
   </div>
 </div>
 
@@ -693,25 +684,21 @@ function loadCheckout() {
   // Clear previous checkout
   checkoutContainer.innerHTML = '';
 
-  // Create the Whop checkout embed div
-  var embedDiv = document.createElement('div');
-  embedDiv.setAttribute('data-whop-checkout-plan-id', planId);
-  embedDiv.setAttribute('data-whop-checkout-return-url', RETURN_URL);
-  embedDiv.setAttribute('data-whop-checkout-theme', 'dark');
-  checkoutContainer.appendChild(embedDiv);
+  // Show loading spinner
+  var loading = document.createElement('div');
+  loading.className = 'checkout-loading';
+  loading.innerHTML = '<div class="checkout-spinner"></div>Loading checkout...';
+  checkoutContainer.appendChild(loading);
 
-  // Re-initialize Whop checkout loader for the new element
-  // The loader script scans for data-whop-checkout-plan-id elements
-  // Dispatch a custom event or re-run initialization
-  if (window.WhopCheckout && typeof window.WhopCheckout.init === 'function') {
-    window.WhopCheckout.init();
-  } else {
-    // Fallback: re-add the script to trigger re-scan
-    var script = document.createElement('script');
-    script.src = 'https://js.whop.com/static/checkout/loader.js';
-    script.async = true;
-    document.head.appendChild(script);
-  }
+  // Create iframe pointing to Whop checkout page
+  var iframe = document.createElement('iframe');
+  iframe.src = 'https://whop.com/checkout/' + planId + '/';
+  iframe.allow = 'payment';
+  iframe.onload = function() {
+    // Remove loading spinner when iframe loads
+    if (loading.parentNode) loading.parentNode.removeChild(loading);
+  };
+  checkoutContainer.appendChild(iframe);
 }
 
 // Frequency toggle
