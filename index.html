@@ -7,6 +7,7 @@
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
 <style>
 :root {
   --gold: #F5B800;
@@ -185,6 +186,7 @@ body::after {
   text-decoration: none;
   transition: all 0.25s;
   position: relative;
+  cursor: pointer;
 }
 .link-btn.btn-free {
   background: var(--green);
@@ -211,12 +213,6 @@ body::after {
   border: 2px solid #9B59B6;
 }
 .link-btn.btn-props:active { transform: scale(0.97); }
-.link-btn.btn-maxbet {
-  background: var(--card);
-  color: var(--white);
-  border: 2px solid #FF3D3D;
-}
-.link-btn.btn-maxbet:active { transform: scale(0.97); }
 .link-btn.btn-premium {
   background: var(--card);
   color: var(--white);
@@ -324,6 +320,177 @@ body::after {
   gap: 4px;
 }
 .trust-item .check { color: var(--green); font-weight: 700; font-size: 13px; }
+
+/* ========== CHECKOUT MODAL ========== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.modal-overlay.active {
+  display: flex;
+}
+.modal {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalIn 0.3s ease-out;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.92) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--gray);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  z-index: 2;
+}
+.modal-close:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--white);
+}
+.modal-header {
+  padding: 28px 24px 0;
+  text-align: center;
+}
+.modal-product-icon {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+.modal-product-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.modal-product-desc {
+  font-size: 13px;
+  color: var(--gray);
+  margin-bottom: 20px;
+}
+
+/* Frequency toggle */
+.freq-toggle {
+  display: flex;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 4px;
+  margin: 0 24px 24px;
+}
+.freq-btn {
+  flex: 1;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--gray);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.freq-btn.active {
+  background: var(--gold);
+  color: var(--black);
+  box-shadow: 0 4px 16px rgba(245,184,0,0.3);
+}
+.freq-btn .freq-label {
+  font-size: 11px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  opacity: 0.7;
+}
+.freq-btn.active .freq-label {
+  opacity: 0.8;
+}
+.freq-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.5px;
+}
+.freq-save {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--green);
+  color: var(--black);
+  padding: 2px 8px;
+  border-radius: 100px;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Checkout embed container */
+.checkout-container {
+  padding: 0 24px 24px;
+  min-height: 400px;
+}
+.checkout-container > div {
+  min-height: 380px;
+}
+.checkout-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 380px;
+  color: var(--gray);
+  font-size: 14px;
+  flex-direction: column;
+  gap: 12px;
+}
+.checkout-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255,255,255,0.08);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Whop checkout iframe styling */
+.whop-checkout-wrapper iframe {
+  border-radius: 12px;
+  min-height: 380px;
+}
 </style>
 </head>
 <body>
@@ -360,27 +527,22 @@ body::after {
       FREE — Join & Start Winning
       <span class="btn-arrow">→</span>
     </a>
-    <a href="https://whop.com/rwtw/rwtw-propboard/" class="link-btn btn-props" target="_blank">
+    <button class="link-btn btn-props" data-product="props" type="button">
       <span class="btn-icon">🎯</span>
-      $19.99/wk — Player Props
+      Player Props
       <span class="btn-arrow">→</span>
-    </a>
-    <a href="https://whop.com/rwtw/max-bet-play-of-the-day/" class="link-btn btn-maxbet" target="_blank">
-      <span class="btn-icon">⚡</span>
-      $24.99 — Max Bet Play of the Day
-      <span class="btn-arrow">→</span>
-    </a>
-    <a href="https://whop.com/rwtw/rwtw/" class="link-btn btn-premium has-badge" target="_blank">
+    </button>
+    <button class="link-btn btn-premium has-badge" data-product="premium" type="button">
       <span class="popular-tag">Most Popular</span>
       <span class="btn-icon">💎</span>
-      $39.99/wk — Premium
+      Premium
       <span class="btn-arrow">→</span>
-    </a>
-    <a href="https://whop.com/rwtw/rwtw-premium-copy/" class="link-btn btn-highrollers" target="_blank">
+    </button>
+    <button class="link-btn btn-highrollers" data-product="highrollers" type="button">
       <span class="btn-icon">🔥</span>
-      $249.99/mo — High Rollers
+      High Rollers
       <span class="btn-arrow">→</span>
-    </a>
+    </button>
   </div>
   <!-- Live win feed -->
   <div class="win-feed">
@@ -400,5 +562,189 @@ body::after {
     <span class="trust-item"><span class="check">✓</span> No card needed</span>
   </div>
 </div>
+
+<!-- Checkout Modal -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" type="button">&times;</button>
+    <div class="modal-header">
+      <div class="modal-product-icon" id="modalIcon"></div>
+      <div class="modal-product-name" id="modalName"></div>
+      <div class="modal-product-desc">Choose your billing frequency</div>
+    </div>
+    <div class="freq-toggle">
+      <button class="freq-btn active" data-freq="weekly" type="button">
+        <span>Weekly</span>
+        <span class="freq-price" id="weeklyPrice"></span>
+        <span class="freq-label">Billed every week</span>
+      </button>
+      <button class="freq-btn" data-freq="monthly" type="button">
+        <span>Monthly</span>
+        <span class="freq-price" id="monthlyPrice"></span>
+        <span class="freq-label">Billed every month</span>
+        <span class="freq-save">Save</span>
+      </button>
+    </div>
+    <div class="checkout-container" id="checkoutContainer">
+      <div class="checkout-loading">
+        <div class="checkout-spinner"></div>
+        Loading checkout...
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Product configuration — update plan IDs here
+// Each product needs a weekly and monthly plan ID from your Whop dashboard
+const PRODUCTS = {
+  props: {
+    name: 'Player Props',
+    icon: '🎯',
+    weeklyPrice: '$19.99/wk',
+    monthlyPrice: '$69.99/mo',
+    weeklyPlanId: 'plan_zYIJo70dXb81W',
+    monthlyPlanId: 'plan_la8tljuRIc3n3',
+  },
+  premium: {
+    name: 'Premium',
+    icon: '💎',
+    weeklyPrice: '$39.99/wk',
+    monthlyPrice: '$139.99/mo',
+    weeklyPlanId: 'plan_FezVq0lWTMaGk',
+    monthlyPlanId: 'plan_yVSMf6AiOityO',
+  },
+  highrollers: {
+    name: 'High Rollers',
+    icon: '🔥',
+    weeklyPrice: null,
+    monthlyPrice: '$249.99/mo',
+    weeklyPlanId: null,
+    monthlyPlanId: 'plan_s4aOLf5Ao4agv',
+    monthlyOnly: true,
+  },
+};
+
+const RETURN_URL = window.location.href;
+
+const modal = document.getElementById('checkoutModal');
+const modalClose = document.getElementById('modalClose');
+const modalIcon = document.getElementById('modalIcon');
+const modalName = document.getElementById('modalName');
+const weeklyPriceEl = document.getElementById('weeklyPrice');
+const monthlyPriceEl = document.getElementById('monthlyPrice');
+const checkoutContainer = document.getElementById('checkoutContainer');
+const freqBtns = document.querySelectorAll('.freq-btn');
+
+let currentProduct = null;
+let currentFreq = 'weekly';
+
+function openModal(productKey) {
+  var product = PRODUCTS[productKey];
+  if (!product) return;
+
+  currentProduct = productKey;
+  var freqToggle = document.querySelector('.freq-toggle');
+
+  // Handle monthly-only products (e.g., High Rollers)
+  if (product.monthlyOnly) {
+    currentFreq = 'monthly';
+    freqToggle.style.display = 'none';
+  } else {
+    currentFreq = 'weekly';
+    freqToggle.style.display = '';
+    weeklyPriceEl.textContent = product.weeklyPrice;
+    // Reset frequency toggle
+    freqBtns.forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.freq === 'weekly');
+    });
+  }
+
+  // Populate modal header
+  modalIcon.textContent = product.icon;
+  modalName.textContent = product.name;
+  monthlyPriceEl.textContent = product.monthlyPrice;
+
+  // Show modal
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  // Load checkout
+  loadCheckout();
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+  checkoutContainer.innerHTML = '';
+  currentProduct = null;
+}
+
+function getPlanId() {
+  var product = PRODUCTS[currentProduct];
+  if (!product) return '';
+  return currentFreq === 'weekly' ? product.weeklyPlanId : product.monthlyPlanId;
+}
+
+function loadCheckout() {
+  var planId = getPlanId();
+  if (!planId) return;
+
+  // Clear previous checkout
+  checkoutContainer.innerHTML = '';
+
+  // Create the Whop checkout embed div
+  var embedDiv = document.createElement('div');
+  embedDiv.setAttribute('data-whop-checkout-plan-id', planId);
+  embedDiv.setAttribute('data-whop-checkout-return-url', RETURN_URL);
+  embedDiv.setAttribute('data-whop-checkout-theme', 'dark');
+  checkoutContainer.appendChild(embedDiv);
+
+  // Re-initialize Whop checkout loader for the new element
+  // The loader script scans for data-whop-checkout-plan-id elements
+  // Dispatch a custom event or re-run initialization
+  if (window.WhopCheckout && typeof window.WhopCheckout.init === 'function') {
+    window.WhopCheckout.init();
+  } else {
+    // Fallback: re-add the script to trigger re-scan
+    var script = document.createElement('script');
+    script.src = 'https://js.whop.com/static/checkout/loader.js';
+    script.async = true;
+    document.head.appendChild(script);
+  }
+}
+
+// Frequency toggle
+freqBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var freq = this.dataset.freq;
+    if (freq === currentFreq) return;
+
+    currentFreq = freq;
+    freqBtns.forEach(function(b) {
+      b.classList.toggle('active', b.dataset.freq === freq);
+    });
+
+    loadCheckout();
+  });
+});
+
+// Product button clicks
+document.querySelectorAll('[data-product]').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    openModal(this.dataset.product);
+  });
+});
+
+// Close modal
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', function(e) {
+  if (e.target === modal) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+});
+</script>
 </body>
 </html>
