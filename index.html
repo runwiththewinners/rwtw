@@ -393,6 +393,26 @@ body::after {
 .compare-table thead th.col-props { color: #9B59B6; }
 .compare-table thead th.col-premium { color: #3498DB; }
 .compare-table thead th.col-highrollers { color: var(--gold); }
+.th-sticker {
+  display: inline-block;
+  font-size: 8px;
+  font-weight: 800;
+  font-family: 'Barlow', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 2px 6px;
+  border-radius: 100px;
+  margin-top: 3px;
+  line-height: 1.3;
+}
+.th-sticker.popular {
+  background: #3498DB;
+  color: var(--white);
+}
+.th-sticker.value {
+  background: var(--gold);
+  color: var(--black);
+}
 .compare-table tbody td {
   padding: 9px 6px;
   text-align: center;
@@ -646,14 +666,21 @@ body::after {
           <th></th>
           <th class="col-free"><span class="th-icon">🏆</span>Free<span class="th-price">$0</span></th>
           <th class="col-props"><span class="th-icon">🎯</span>Props<span class="th-price">From $19.99/wk</span></th>
-          <th class="col-premium"><span class="th-icon">💎</span>Premium<span class="th-price">From $49.99/wk</span></th>
-          <th class="col-highrollers"><span class="th-icon">🔥</span>High Rollers<span class="th-price">$249.99/mo</span></th>
+          <th class="col-premium"><span class="th-icon">💎</span>Premium<span class="th-price">From $49.99/wk</span><span class="th-sticker popular">Popular</span></th>
+          <th class="col-highrollers"><span class="th-icon">🔥</span>High Rollers<span class="th-price">$249.99/mo</span><span class="th-sticker value">Value</span></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td>Community Access</td>
           <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-yes">✓</span></td>
+        </tr>
+        <tr>
+          <td>VIP Chat Access</td>
+          <td><span class="check-no">—</span></td>
           <td><span class="check-yes">✓</span></td>
           <td><span class="check-yes">✓</span></td>
           <td><span class="check-yes">✓</span></td>
@@ -680,16 +707,16 @@ body::after {
           <td><span class="check-yes">✓</span></td>
         </tr>
         <tr>
-          <td>Live Bet Alerts</td>
+          <td>Play of the Day</td>
           <td><span class="check-no">—</span></td>
           <td><span class="check-no">—</span></td>
           <td><span class="check-yes">✓</span></td>
           <td><span class="check-yes">✓</span></td>
         </tr>
         <tr>
-          <td>VIP Chat Access</td>
+          <td>Live Bet Alerts</td>
           <td><span class="check-no">—</span></td>
-          <td><span class="check-yes">✓</span></td>
+          <td><span class="check-no">—</span></td>
           <td><span class="check-yes">✓</span></td>
           <td><span class="check-yes">✓</span></td>
         </tr>
