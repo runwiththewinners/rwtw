@@ -176,6 +176,27 @@ body::after {
   background: rgba(255,255,255,0.08);
   align-self: stretch;
 }
+.whop-rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  animation: fadeUp 0.4s ease-out 0.42s both;
+  font-size: 13px;
+  font-weight: 600;
+}
+.whop-stars {
+  color: var(--gold);
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+.whop-rating-text {
+  color: var(--gray);
+}
+.whop-rating-text strong {
+  color: var(--white);
+}
 /* BUTTONS */
 .btn-stack {
   width: 100%;
@@ -440,6 +461,199 @@ body::after {
   font-size: 12px;
 }
 
+/* ========== SPORTS COVERAGE ========== */
+.sports-section {
+  width: 100%;
+  margin-bottom: 20px;
+  animation: fadeUp 0.4s ease-out 0.56s both;
+}
+.sports-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  color: var(--white);
+}
+.sports-pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+.sport-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.08);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.3px;
+}
+.sport-pill .sport-emoji { font-size: 14px; }
+
+/* ========== HOW IT WORKS ========== */
+.hiw-section {
+  width: 100%;
+  margin-bottom: 20px;
+  animation: fadeUp 0.4s ease-out 0.58s both;
+}
+.hiw-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  color: var(--white);
+}
+.hiw-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.hiw-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 16px;
+}
+.hiw-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.hiw-content { flex: 1; }
+.hiw-step-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+}
+.hiw-step-desc {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.4;
+}
+
+/* ========== TESTIMONIALS ========== */
+.testimonials-section {
+  width: 100%;
+  margin-bottom: 20px;
+  animation: fadeUp 0.4s ease-out 0.6s both;
+}
+.testimonials-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  color: var(--white);
+}
+.testimonial-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.testimonial-card {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 16px;
+}
+.testimonial-quote {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 10px;
+  font-style: italic;
+}
+.testimonial-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.testimonial-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--gold);
+}
+.testimonial-result {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--green);
+}
+
+/* ========== FAQ ========== */
+.faq-section {
+  width: 100%;
+  margin-bottom: 20px;
+  animation: fadeUp 0.4s ease-out 0.62s both;
+}
+.faq-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  color: var(--white);
+}
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.faq-item {
+  background: var(--card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.faq-item summary {
+  padding: 14px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--white);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  font-size: 18px;
+  color: var(--gray);
+  font-weight: 400;
+  transition: transform 0.2s;
+}
+.faq-item[open] summary::after {
+  content: '−';
+}
+.faq-answer {
+  padding: 0 16px 14px;
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
 /* ========== COUNTDOWN TIMER ========== */
 .countdown-bar {
   width: 100%;
@@ -689,6 +903,11 @@ body::after {
       <div class="proof-label">Won</div>
     </div>
   </div>
+  <!-- Whop Rating -->
+  <div class="whop-rating">
+    <span class="whop-stars">★★★★★</span>
+    <span class="whop-rating-text"><strong>5.0</strong> on Whop</span>
+  </div>
   <!-- CTA Buttons -->
   <div class="btn-stack">
     <a href="checkout/free.html" class="link-btn btn-free">
@@ -785,6 +1004,104 @@ body::after {
         </tr>
       </tbody>
     </table>
+  </div>
+  <!-- Sports Coverage -->
+  <div class="sports-section">
+    <div class="sports-title">Sports We Cover</div>
+    <div class="sports-pills">
+      <span class="sport-pill"><span class="sport-emoji">🏀</span> NBA</span>
+      <span class="sport-pill"><span class="sport-emoji">🏈</span> NFL</span>
+      <span class="sport-pill"><span class="sport-emoji">⚾</span> MLB</span>
+      <span class="sport-pill"><span class="sport-emoji">🏒</span> NHL</span>
+      <span class="sport-pill"><span class="sport-emoji">🥊</span> UFC</span>
+      <span class="sport-pill"><span class="sport-emoji">⚽</span> Soccer</span>
+      <span class="sport-pill"><span class="sport-emoji">🎾</span> Tennis</span>
+      <span class="sport-pill"><span class="sport-emoji">🏌️</span> Golf</span>
+    </div>
+  </div>
+  <!-- How It Works -->
+  <div class="hiw-section">
+    <div class="hiw-title">How It Works</div>
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-num">1</div>
+        <div class="hiw-content">
+          <div class="hiw-step-title">Join</div>
+          <div class="hiw-step-desc">Sign up free or pick a plan that fits your style.</div>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">2</div>
+        <div class="hiw-content">
+          <div class="hiw-step-title">Get Picks</div>
+          <div class="hiw-step-desc">Receive daily expert picks and live bet alerts straight to your phone.</div>
+        </div>
+      </div>
+      <div class="hiw-step">
+        <div class="hiw-num">3</div>
+        <div class="hiw-content">
+          <div class="hiw-step-title">Win</div>
+          <div class="hiw-step-desc">Follow the plays, stack profits, and run with the winners.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Testimonials -->
+  <div class="testimonials-section">
+    <div class="testimonials-title">What Members Are Saying</div>
+    <div class="testimonial-cards">
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"I was skeptical at first but these guys are legit. Hit 4 out of 5 picks my first week. Premium pays for itself."</div>
+        <div class="testimonial-footer">
+          <span class="testimonial-name">@MikeR</span>
+          <span class="testimonial-result">+$4,200 in 2 weeks</span>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"The player props alone are worth it. I've never had a community that actually delivers like this. 5 stars on Whop for a reason."</div>
+        <div class="testimonial-footer">
+          <span class="testimonial-name">@TylerK</span>
+          <span class="testimonial-result">+$1,800 first month</span>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-quote">"High Rollers is next level. The 1-on-1 support and VIP picks have completely changed my game. Best investment I've made."</div>
+        <div class="testimonial-footer">
+          <span class="testimonial-name">@JessL</span>
+          <span class="testimonial-result">+$8,500 in 6 weeks</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FAQ -->
+  <div class="faq-section">
+    <div class="faq-title">Frequently Asked Questions</div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>How fast do I get access?</summary>
+        <div class="faq-answer">Instantly. As soon as you complete checkout, you'll get immediate access to the community and all picks for your tier.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What sports do you cover?</summary>
+        <div class="faq-answer">We cover NBA, NFL, MLB, NHL, UFC, Soccer, Tennis, and Golf. Our expert handicappers specialize across all major sports.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I cancel anytime?</summary>
+        <div class="faq-answer">Yes, 100%. You can cancel your subscription at any time with no questions asked. No contracts, no hidden fees.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I receive picks?</summary>
+        <div class="faq-answer">All picks are delivered through our private community on Whop. You'll get notifications for every new pick and live bet alert.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Is there a free option?</summary>
+        <div class="faq-answer">Yes! Our free tier gives you community access and a taste of what we offer. No card required. Upgrade anytime to unlock premium picks.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What makes RWTW different?</summary>
+        <div class="faq-answer">Transparency, results, and community. We post verified records, have 30K+ active members, and maintain a 73% win rate. We don't just sell picks — we win together.</div>
+      </details>
+    </div>
   </div>
   <!-- Live win feed -->
   <div class="win-feed">
