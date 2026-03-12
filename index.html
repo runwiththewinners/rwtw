@@ -461,6 +461,67 @@ body::after {
   font-size: 12px;
 }
 
+/* ========== DISCOUNT BANNER ========== */
+.discount-banner {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(245,184,0,0.12), rgba(0,230,118,0.08));
+  border: 1px solid rgba(245,184,0,0.25);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.4s ease-out 0.18s both;
+}
+.discount-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(245,184,0,0.06), transparent);
+  animation: shimmer 3s infinite;
+}
+.discount-text {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--white);
+  position: relative;
+  line-height: 1.5;
+}
+.discount-code {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--black);
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  margin: 0 4px;
+}
+.discount-sub {
+  display: block;
+  font-family: 'Barlow', sans-serif;
+  font-size: 11px;
+  color: var(--gray);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 4px;
+}
+
+/* ========== MID-PAGE CTA ========== */
+.mid-cta {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.mid-cta .link-btn {
+  width: 100%;
+}
+
 /* ========== SPORTS COVERAGE ========== */
 .sports-section {
   width: 100%;
@@ -867,6 +928,13 @@ body::after {
 </head>
 <body>
 <div class="wrapper">
+  <!-- Discount Banner -->
+  <div class="discount-banner">
+    <div class="discount-text">
+      Use code <span class="discount-code">WELCOME</span> for 25% OFF your first payment
+      <span class="discount-sub">New users only. Valid on any paid plan.</span>
+    </div>
+  </div>
   <!-- Logo -->
   <img src="logo.png" alt="RWTW" class="logo">
   <!-- Live badge -->
@@ -1046,6 +1114,14 @@ body::after {
       </div>
     </div>
   </div>
+  <!-- Mid-page CTA -->
+  <div class="mid-cta">
+    <a href="checkout/free.html" class="link-btn btn-free">
+      <span class="btn-icon">🏆</span>
+      Join Free — Start Winning Today
+      <span class="btn-arrow">→</span>
+    </a>
+  </div>
   <!-- Testimonials -->
   <div class="testimonials-section">
     <div class="testimonials-title">What Members Are Saying</div>
@@ -1102,6 +1178,14 @@ body::after {
         <div class="faq-answer">Transparency, results, and community. We post verified records, have 30K+ active members, and maintain a 73% win rate. We don't just sell picks — we win together.</div>
       </details>
     </div>
+  </div>
+  <!-- Bottom CTA -->
+  <div class="mid-cta">
+    <a href="checkout/free.html" class="link-btn btn-free">
+      <span class="btn-icon">🏆</span>
+      Join Free — No Card Required
+      <span class="btn-arrow">→</span>
+    </a>
   </div>
   <!-- Live win feed -->
   <div class="win-feed">
