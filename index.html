@@ -1352,42 +1352,37 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
 });
 
-// Countdown to 5:00 PM ET daily
+// Countdown to 5:00 PM ET daily — banner from 5 PM to midnight ET
 (function() {
   var label = document.getElementById('countdownLabel');
   var timeEl = document.getElementById('countdownTime');
 
-  function getNext5PM() {
-    // Get current time in ET
+  function getETNow() {
     var now = new Date();
-    var et = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
-    var target = new Date(et);
-    target.setHours(17, 0, 0, 0);
-    // If past 5 PM ET, target is tomorrow
-    if (et >= target) {
-      target.setDate(target.getDate() + 1);
-    }
-    // Convert back: get the difference using ET times
-    var diffMs = target - et;
-    return diffMs;
+    return new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
   }
 
   function updateCountdown() {
-    var diff = getNext5PM();
-    // If within 30 minutes after 5 PM (diff > 23.5 hours means we just passed it)
-    var totalHours = diff / (1000 * 60 * 60);
-    if (totalHours > 23.5) {
-      // Just passed 5 PM — show "dropped" state for 30 min
+    var et = getETNow();
+    var hour = et.getHours();
+
+    // Between 5 PM (17:00) and midnight (0:00) ET — show dropped banner
+    if (hour >= 17) {
       label.textContent = "Play of the Day";
       label.style.color = '';
       timeEl.className = 'countdown-dropped';
-      timeEl.innerHTML = "🔥 LIVE NOW — GET IN 🔥";
+      timeEl.innerHTML = "🔥 DROPPED — GET IN NOW 🔥";
       return;
     }
 
+    // Before 5 PM — show countdown timer
     label.textContent = "Play of the Day Dropping In";
     label.style.color = '';
     timeEl.className = 'countdown-time';
+
+    var target = new Date(et);
+    target.setHours(17, 0, 0, 0);
+    var diff = target - et;
 
     var hours = Math.floor(diff / (1000 * 60 * 60));
     var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
